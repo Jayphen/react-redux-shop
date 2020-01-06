@@ -2,30 +2,27 @@ import React from "react";
 import { Link } from "@reach/router";
 
 import Item from "./Item";
+import { useCart } from "../CartProvider";
 
-class Cart extends React.Component {
-  renderItems() {
-    if (this.props.items.length > 0) {
-      return this.props.items.map(item => (
-        <Item removeFromCart={this.props.removeFromCart} {...item} />
-      ));
-    }
+function Cart() {
+  const { count, cart } = useCart();
+  const emptyCart = count < 1;
 
-    return (
-      <div>
-        You have nothing in your cart! You should{" "}
-        <Link to="/">find something you like!</Link>
-      </div>
-    );
-  }
-  render() {
-    return (
-      <div>
-        <h2>Your Cart</h2>
-        {this.renderItems()}
-      </div>
-    );
-  }
+  return (
+    <div>
+      <h2>Your Cart</h2>
+      {emptyCart && (
+        <div>
+          You have nothing in your cart! You should{" "}
+          <Link to="/">find something you like!</Link>
+        </div>
+      )}
+
+      {cart.map(item => (
+        <Item {...item} />
+      ))}
+    </div>
+  );
 }
 
 export default Cart;
