@@ -1,5 +1,4 @@
 import React from "react";
-import { connect } from "react-redux";
 import { Link } from "@reach/router";
 
 import icon from "./cart.png";
@@ -23,10 +22,4 @@ class MenuIcon extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    number: state.cart.length
-  };
-};
-
-export default connect(mapStateToProps)(MenuIcon);
+export default MenuIcon;

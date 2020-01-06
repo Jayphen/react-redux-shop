@@ -1,12 +1,14 @@
 import React from "react";
 
-import { connect } from "react-redux";
-import { addToCart, removeFromCart } from "../actions";
+import productsList from "../productsList";
 
 import styles from "./Show.module.scss";
 import formatPrice from "./formatPrice";
 
 class Show extends React.Component {
+  state = {
+    price: null
+  };
   addToCart = () => {
     this.props.addToCart(this.props.id);
   };
@@ -16,7 +18,7 @@ class Show extends React.Component {
   };
 
   renderAddToCartButton() {
-    if (this.props.inCart) {
+    if (this.props.inCart(this.props.id)) {
       return (
         <button
           onClick={this.removeFromCart}
@@ -37,8 +39,17 @@ class Show extends React.Component {
     );
   }
 
+  componentDidMount() {
+    const product = productsList.find(
+      product => product.id.toString() === this.props.id
+    );
+
+    this.setState({ ...product });
+  }
+
   render() {
-    const { picture, id, price } = this.props;
+    const { id } = this.props;
+    const { picture, price } = this.state;
     return (
       <div>
         <h2>Picture #{id}</h2>
@@ -53,25 +64,4 @@ class Show extends React.Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  const product = state.products.find(
-    product => product.id.toString() === ownProps.id
-  );
-
-  const inCart = state.cart.includes(product);
-
-  return { ...product, inCart: inCart };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    addToCart: id => {
-      dispatch(addToCart(id));
-    },
-    removeFromCart: id => {
-      dispatch(removeFromCart(id));
-    }
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Show);
+export default Show;

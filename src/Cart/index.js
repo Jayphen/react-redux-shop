@@ -1,5 +1,4 @@
 import React from "react";
-import { connect } from "react-redux";
 import { Link } from "@reach/router";
 
 import Item from "./Item";
@@ -7,7 +6,9 @@ import Item from "./Item";
 class Cart extends React.Component {
   renderItems() {
     if (this.props.items.length > 0) {
-      return this.props.items.map(item => <Item {...item} />);
+      return this.props.items.map(item => (
+        <Item removeFromCart={this.props.removeFromCart} {...item} />
+      ));
     }
 
     return (
@@ -27,10 +28,4 @@ class Cart extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    items: state.cart
-  };
-};
-
-export default connect(mapStateToProps)(Cart);
+export default Cart;

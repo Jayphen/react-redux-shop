@@ -1,9 +1,7 @@
 import React from "react";
-import { connect } from "react-redux";
 
 import styles from "./Item.module.scss";
 
-import { removeFromCart } from "../actions";
 import formatPrice from "../Products/formatPrice";
 
 class Item extends React.Component {
@@ -35,12 +33,4 @@ class Item extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    removeFromCart: id => {
-      dispatch(removeFromCart(id));
-    }
-  };
-};
-
-export default connect(null, mapDispatchToProps)(Item);
+export default Item;

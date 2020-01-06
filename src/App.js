@@ -1,11 +1,9 @@
 import React from "react";
 import { Router, Link } from "@reach/router";
 
-import { Provider } from "react-redux";
-import store from "./store";
-
 import "./App.scss";
 
+import productsList from "./productsList";
 import Products from "./Products";
 import Product from "./Products/Show";
 import Cart from "./Cart";
@@ -13,22 +11,52 @@ import Cart from "./Cart";
 import CartMenuIcon from "./Cart/MenuIcon";
 
 class App extends React.Component {
+  state = {
+    cart: []
+  };
+  addToCart = id => {
+    const product = productsList.find(product => product.id === Number(id));
+
+    this.setState({ cart: this.state.cart.concat(product) });
+  };
+
+  removeFromCart = id => {
+    const cart = this.state.cart.filter(product => product.id !== Number(id));
+
+    this.setState({ cart: cart });
+  };
+
+  inCart = id => {
+    return !!this.state.cart.find(product => product.id === Number(id));
+  };
+
+  removeFromCart(id) {}
   render() {
+    const cart = this.state.cart;
     return (
-      <Provider store={store}>
+      <div>
         <menu className="topbar">
           <Link to="/">
             <h1>My Shop</h1>
           </Link>
-          <CartMenuIcon></CartMenuIcon>
+          <CartMenuIcon number={cart.length}></CartMenuIcon>
         </menu>
         <Router>
-          <Products path="/" />
-          <Product path="/products/:id" />
+          <Products path="/" products={productsList} />
+          <Product
+            path="/products/:id"
+            inCart={this.inCart}
+            addToCart={this.addToCart}
+            removeFromCart={this.removeFromCart}
+          />
 
-          <Cart path="/cart" />
+          <Cart
+            path="/cart"
+            items={cart}
+            removeFromCart={this.removeFromCart}
+          />
         </Router>
-      </Provider>
+      </div>
     );
   }
 }
