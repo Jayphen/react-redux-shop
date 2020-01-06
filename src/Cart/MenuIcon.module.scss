@@ -1,0 +1,18 @@
+.container {
+  display: grid;
+  justify-self: end;
+  grid-template-columns: 1fr 1fr;
+
+  img {
+    min-height: 33px;
+    max-height: 3vh;
+  }
+}
+
+.number {
+  display: inline-block;
+  padding-top: 25%;
+  height: 100%;
+  text-align: center;
+  margin-bottom: 10px;
+}

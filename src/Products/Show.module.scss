@@ -1,0 +1,10 @@
+
+.addToCart {
+  composes: cartButton from "../Cart/Item.module.scss";
+  border: 1px solid rgb(2, 114, 158);
+  background: rgb(0, 155, 216);
+}
+
+.removeFromCart {
+  composes: cartButton, removeFromCart from "../Cart/Item.module.scss";
+}

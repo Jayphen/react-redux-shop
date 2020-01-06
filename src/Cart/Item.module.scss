@@ -1,0 +1,26 @@
+.item {
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  grid-gap: 1rem;
+}
+
+.image {
+  img {
+    max-width: 100%;
+  }
+}
+
+.cartButton {
+  display: block;
+  padding: 1vw;
+  margin-top: 2vh;
+  font-size: 110%;
+  border-radius: 10px;
+  color: white;
+}
+
+.removeFromCart {
+  composes: cartButton;
+  border: 1px solid rgb(148, 22, 0);
+  background: rgb(216, 0, 0);
+}
